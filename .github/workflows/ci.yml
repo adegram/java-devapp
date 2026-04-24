@@ -51,7 +51,5 @@ jobs:
         with:
           context: . # Specify the build context (e.g., the directory containing the Dockerfile)
           push: true
-          tags: |
-            ${{ secrets.DOCKER_USERNAME }}/java-app:v3.2.2   
-            # Specify your Docker image name and tag
-            
+          tags:
+            ${{ secrets.DOCKER_USERNAME }}/java-app:v3.3.2      

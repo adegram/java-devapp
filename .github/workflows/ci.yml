@@ -4,7 +4,7 @@ name: Java CI with Gradle
 on:
   push:                           #Step 1 
     branches: [ main ]                 
-  workflow_dispatch:    # Allows manual triggering of the workflow from the GitHub Actions tab
+  workflow_dispatch:    
 
 jobs:
   build-java:
@@ -16,20 +16,20 @@ jobs:
       uses: actions/checkout@v2
 
 
-    - name: Set up JDK 8
+    - name: Set up JDK 8          #Step 3
       uses: actions/setup-java@v4
       with:
-          java-version: '8' # Change this from '17' to '8'
+          java-version: '8' 
           distribution: 'temurin'
           cache: 'gradle'
 
-    - name: Grant execute permission for gradlew     #Step 4 
+    - name: Grant execute permission for gradlew    #Step 4 (continued)
       run: chmod +x gradlew
 
-    - name: Build with Gradle
-      run: ./gradlew build 
+    - name: Build with Gradle     #Step 5
+      run: ./gradlew build  
 
-    - name: Upload JAR artifact
+    - name: Upload JAR artifact   #Step 6
       uses: actions/upload-artifact@v4
       with:
        name: app-jar
@@ -47,22 +47,22 @@ jobs:
         uses: actions/checkout@v4
 
 
-      - name: Download JAR artifact
+      - name: Download JAR artifact  #Step 7 
         uses: actions/download-artifact@v4
         with:
           name: app-jar
           path: build/libs
 
-      - name: Login to DockerHub        #Step 6
+      - name: Login to DockerHub        #Step 8
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       
-      - name: Build and Push Docker Image         #Step 7
+      - name: Build and Push Docker Image         #Step 9
         uses: docker/build-push-action@v4
         with:
-          context: . # Specify the build context (e.g., the directory containing the Dockerfile)
+          context: . # Specify the build context (directory containing the Dockerfile)
           push: true
           tags:
             ${{ secrets.DOCKER_USERNAME }}/java-app:v3.3.2      

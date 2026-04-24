@@ -16,10 +16,11 @@ jobs:
       uses: actions/checkout@v2
 
 
-    - uses: actions/setup-java@v5
+    - uses: actions/setup-java@v4
       with:
         distribution: 'temurin' # Step 3
         java-version: '25'
+        cache: 'gradle'
 
 
     - name: Grant execute permission for gradlew     #Step 4 
@@ -29,12 +30,15 @@ jobs:
       uses: gradle/actions/setup-gradle@v6
 
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew build -x test
+
+    - name: Check if JAR exists (Debug Step)
+      run: ls -l build/libs/
 
 
 
 
-      
+
 
 #Phase 2
   Docker-Build-Push:

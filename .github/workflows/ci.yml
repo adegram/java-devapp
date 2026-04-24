@@ -15,11 +15,12 @@ jobs:
     - name: Checkout Code         #Step 2
       uses: actions/checkout@v2
 
-    - name: Setup JDK
-      uses: actions/setup-java@v4 #Step 3
+
+    - uses: actions/setup-java@v5
       with:
-          distribution: '17'
-          java-version: 'temurin' 
+        distribution: 'temurin' # Step 3
+        java-version: '25'
+
 
     - name: Grant execute permission for gradlew     #Step 4 
       run: chmod +x gradlew
